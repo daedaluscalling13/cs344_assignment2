@@ -5,6 +5,7 @@
 #include "invalid_prompt.h"
 #include "largest_file.h"
 #include "smallest_file.h"
+#include "user_file.h"
 
 void userProcessFile(void){
 
@@ -29,10 +30,11 @@ void userProcessFile(void){
                 proceed = 1;
                 break;
             case 3:
-                // Get a file name
-                // Get that file fd if possible
-                printf("You picked %i", prompt);
-                proceed = 1;
+                getUserPathname(pathname);
+                if (strcmp(pathname, "") != 0){
+                    proceed = 1;
+                }
+                printf("The file selected was %s\n", pathname);
                 break;
             default:
                 invalidPrompt();

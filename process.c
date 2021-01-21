@@ -3,31 +3,42 @@
 #include <string.h>
 #include "process_prompt.h"
 #include "invalid_prompt.h"
+#include "largest_file.h"
+#include "smallest_file.h"
 
 void userProcessFile(void){
 
-    // flag
-    int fileProcessed = 0;
+    int proceed = 0; //Flag
     int prompt;
+    char pathname[256] = "";
+    char userFilename[256] = "";
 
-    while(!fileProcessed){
+    while(!proceed){
         prompt = receiveProcessPrompt();
         switch(prompt){
             case 1:
-                printf("You picked %i", prompt);
-                fileProcessed = 1;
+                // Get largest file pathname
+                getLargestFile(".", pathname);
+                printf("The file selected was %s\n", pathname);
+                proceed = 1;
                 break;
             case 2:
-                printf("You picked %i", prompt);
-                fileProcessed = 1;
+                // Get smallest file pathname
+                getSmallestFile(".", pathname);
+                printf("The file selected was %s\n", pathname);
+                proceed = 1;
                 break;
             case 3:
+                // Get a file name
+                // Get that file fd if possible
                 printf("You picked %i", prompt);
-                fileProcessed = 1;
+                proceed = 1;
                 break;
             default:
                 invalidPrompt();
                 break;
         }
     }
+
+    // Process file from fd
 }

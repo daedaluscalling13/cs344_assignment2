@@ -12,7 +12,7 @@ int receiveProcessPrompt(void){
     printf("Enter 2 to pick the smallest file\n");
     printf("Enter 3 to specify the name of a file\n");
     printf("\n");
-    printf("Enter a choice from 1 to 2: ");
+    printf("Enter a choice from 1 to 3: ");
     
     char* prompt = calloc(sizeof(char), 16);
     scanf("%s", prompt);

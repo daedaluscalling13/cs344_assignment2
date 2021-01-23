@@ -49,7 +49,7 @@ struct movie* createMovie(char *currLine)
     }
     free(languagesBuffer);
 
-    // Set the next node to NULL in the newly created student entry
+    // Set the next node to NULL in the newly created movie entry
     currMovie->next = NULL;
 
     return currMovie;

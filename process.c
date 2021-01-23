@@ -9,6 +9,7 @@
 #include "process_file.h"
 #include "movie.h"
 #include "process_pathname.h"
+#include "free_list.h"
 
 // Prompt the user to choose a file.
 // The file is then processed as per the specifications.
@@ -48,4 +49,5 @@ void userProcessFile(void){
     printf("Now processing the chosen file named %s\n", pathname);
     struct movie* movieList = processFile(pathname);
     processPathname(movieList);
+    freeList(movieList);
 }

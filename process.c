@@ -24,13 +24,11 @@ void userProcessFile(void){
             case 1:
                 // Get largest file pathname
                 getLargestFile(".", pathname);
-                printf("The file selected was %s\n", pathname);
                 proceed = 1;
                 break;
             case 2:
                 // Get smallest file pathname
                 getSmallestFile(".", pathname);
-                printf("The file selected was %s\n", pathname);
                 proceed = 1;
                 break;
             case 3:
@@ -39,7 +37,6 @@ void userProcessFile(void){
                 if (strcmp(pathname, "") != 0){
                     proceed = 1;
                 }
-                printf("The file selected was %s\n", pathname);
                 break;
             default:
                 invalidPrompt();

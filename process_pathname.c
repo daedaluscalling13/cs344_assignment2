@@ -11,18 +11,17 @@
 
 void processPathname(struct movie* list){
     int randSuffix;
-    char* dirPath;
-    char* filePath;
+    char dirPath[32];
+    char filePath[64];
     int dd;
-    int fd;
-    DIR* dirFromFile;
-    struct movie* head;
-    struct movie* next;
-    struct movie* prev;
-    char* currYear;
-    char* strToWrite;
-    struct movie* currMovie;
-    struct movie* currList;
+    FILE* pFile = NULL;
+    DIR* dirFromFile = NULL;
+    struct movie* head = NULL;
+    struct movie* next = NULL;
+    struct movie* prev = NULL;
+    char currYear[5];
+    struct movie* currMovie = NULL;
+    struct movie* currList = NULL;
 
     currMovie = list;
 
@@ -34,9 +33,6 @@ void processPathname(struct movie* list){
     sprintf(dirPath, "kiblerke.movies.%d", randSuffix);
     dd = mkdir(dirPath, 0750);
 
-    // Open dir
-    dirFromFile = opendir(dirPath);
-
     // Create and write data to files
     while (currMovie != NULL){
         currList = list;
@@ -45,25 +41,31 @@ void processPathname(struct movie* list){
         strcpy(currYear, currMovie->year);
 
         // Create a file with the current string
-        sprintf(filePath, "%s.txt", currYear);
+        sprintf(filePath, "%s/%s.txt", dirPath, currYear);
         
-        fd = open(filePath, O_RDWR | O_CREAT, 0640);
-        if (fd == -1){
-            printf("open() failed on %s\n", filePath);
+        pFile = fopen(filePath, "wa");
+        if (pFile == NULL){
+            printf("fopen() failed on %s\n", filePath);
+            return;
         }
 
         while (currList != NULL){
             // Write data to the file
-            if (strcmp(currList->year, currMovie->year)){
-                sprintf(strToWrite, "%s\n", currList->title);
-                int numWritten = write(fd, strToWrite, strlen(strToWrite));
+            if (strcmp(currList->year, currMovie->year) == 0){
+                fprintf(pFile, currList->title);
+                fprintf(pFile, "\n");
             }
 
             currList = currList->next;
         }
 
+        fclose(pFile);
+        chmod(filePath, 0640);
+
         currMovie = currMovie->next;
     }
+
+    printf("Created direcotry with name %s\n", dirPath);
 
     return;
 }
